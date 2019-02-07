@@ -2,7 +2,7 @@ let mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 const server = "0.0.0.0:27017"; // REPLACE WITH YOUR DB SERVER
-const database = "hookah"; // REPLACE WITH YOUR DB NAME
+const database = "meat"; // REPLACE WITH YOUR DB NAME
 const nodemailer = require("nodemailer");
 const transporter = require("./utils/transporter");
 const bodyParser = require("body-parser");
@@ -29,12 +29,12 @@ dataBase._connect();
 
 var Schema = mongoose.Schema;
 
-const InfoSchema = new Schema({
+const CompanySchema = new Schema({
   _id: mongoose.Types.ObjectId,
-  title: String
+  name: String
 });
 
-var InfoModel = mongoose.model("info", InfoSchema, "info");
+var CompanyModel = mongoose.model("companies", CompanySchema, "companies");
 
 app.use(bodyParser.json());
 
@@ -47,9 +47,15 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get("/getTitle", (req, res) => {
-  InfoModel.findOne().then(response => {
-    res.send(response.title);
+// app.get("/getTitle", (req, res) => {
+//   CompanyModel.findOne().then(response => {
+//     res.send(response.title);
+//   });
+// });
+
+app.get("/getCompanies", (req, res) => {
+  CompanyModel.find().then(companies => {
+    res.send(companies);
   });
 });
 
@@ -79,7 +85,7 @@ app.post("/callback", (req, res) => {
 
 app.listen(8009, () => {
   console.log("Ну здарова");
-  InfoModel.findOne().then(response => {
-    console.log(response.title);
-  });
+  // InfoModel.findOne().then(response => {
+  //   console.log(response.title);
+  // });
 });
