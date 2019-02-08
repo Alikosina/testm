@@ -34,7 +34,21 @@ const CompanySchema = new Schema({
   name: String
 });
 
-var CompanyModel = mongoose.model("companies", CompanySchema, "companies");
+const MeatSchema = new Schema({
+  _id: mongoose.Types.ObjectId,
+  key: String,
+  label: String,
+  products: [
+    {
+      label: String,
+      price: Number,
+      company: String
+    }
+  ]
+});
+
+const CompanyModel = mongoose.model("companies", CompanySchema, "companies");
+const MeatModel = mongoose.model("meat", MeatSchema, "meat");
 
 app.use(bodyParser.json());
 
@@ -56,6 +70,12 @@ app.use(function(req, res, next) {
 app.get("/getCompanies", (req, res) => {
   CompanyModel.find().then(companies => {
     res.send(companies);
+  });
+});
+
+app.get("/getChicken", (req, res) => {
+  MeatModel.findOne({ key: "chicken" }).then(chicken => {
+    res.send(chicken);
   });
 });
 
