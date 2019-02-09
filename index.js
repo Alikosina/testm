@@ -73,6 +73,12 @@ app.get("/getCompanies", (req, res) => {
   });
 });
 
+app.get("/getMeat", (req, res) => {
+  MeatModel.find().then(meat => {
+    res.send(meat);
+  });
+});
+
 app.get("/getChicken", (req, res) => {
   MeatModel.findOne({ key: "chicken" }).then(chicken => {
     res.send(chicken);
