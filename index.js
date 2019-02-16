@@ -50,6 +50,8 @@ const MeatSchema = new Schema({
 const CompanyModel = mongoose.model("companies", CompanySchema, "companies");
 const MeatModel = mongoose.model("meat", MeatSchema, "meat");
 
+app.use("/images", express.static(__dirname + "/images"));
+
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
